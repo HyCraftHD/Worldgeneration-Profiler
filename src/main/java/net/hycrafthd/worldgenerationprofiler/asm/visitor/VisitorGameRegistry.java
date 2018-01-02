@@ -1,16 +1,14 @@
 package net.hycrafthd.worldgenerationprofiler.asm.visitor;
 
-import java.util.*;
+import java.util.ListIterator;
 
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.*;
 
 import net.hycrafthd.worldgenerationprofiler.WorldGenerationProfilerPlugin;
 import net.hycrafthd.worldgenerationprofiler.asm.MinecraftClassVisitor;
-import net.hycrafthd.worldgenerationprofiler.profiler.Profiler;
-import net.minecraft.world.World;
-import net.minecraft.world.chunk.*;
-import net.minecraftforge.fml.common.IWorldGenerator;
+import net.minecraft.launchwrapper.LaunchClassLoader;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class VisitorGameRegistry extends MinecraftClassVisitor {
 	
@@ -54,33 +52,32 @@ public class VisitorGameRegistry extends MinecraftClassVisitor {
 	private void insert(ListIterator<AbstractInsnNode> iterator) {
 		iterator.previous();
 		
+		GameVersion version = GameVersion.getCurrent();
+		
+		if (version == GameVersion.UNSUPPORTED) {
+			WorldGenerationProfilerPlugin.getLogger().error("Unsupported version.");
+			FMLCommonHandler.instance().exitJava(0, true);
+			return;
+		}
+		
+		try {
+			LaunchClassLoader loader = (LaunchClassLoader) this.getClass().getClassLoader();
+			Class clazz = loader.findClass("net.hycrafthd.worldgenerationprofiler.generation.CustomWorldGenerator");
+			WorldGenerationProfilerPlugin.getLogger().info("CustomWorldGenerator loaded in vm successfully for " + version + " (" + clazz.getName() + ")");
+		} catch (Exception ex) {
+			WorldGenerationProfilerPlugin.getLogger().error("CustomWorldGenerator class could not be loaded to classloader.", ex);
+			FMLCommonHandler.instance().exitJava(0, true);
+		}
+		
 		iterator.add(new FieldInsnNode(Opcodes.GETSTATIC, "net/minecraftforge/fml/common/registry/GameRegistry", "sortedGeneratorList", "Ljava/util/List;"));
 		iterator.add(new VarInsnNode(ILOAD, 0));
 		iterator.add(new VarInsnNode(ILOAD, 1));
 		iterator.add(new VarInsnNode(ALOAD, 2));
 		iterator.add(new VarInsnNode(ALOAD, 3));
 		iterator.add(new VarInsnNode(ALOAD, 4));
-		iterator.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "net/hycrafthd/worldgenerationprofiler/asm/visitor/VisitorGameRegistry", "generate", "(Ljava/util/List;IILnet/minecraft/world/World;Lnet/minecraft/world/chunk/IChunkGenerator;Lnet/minecraft/world/chunk/IChunkProvider;)V", false));
+		iterator.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "net/hycrafthd/worldgenerationprofiler/generation/CustomWorldGenerator", "generate", version.getDescriptor(), false));
 		
 		iterator.next();
 	}
 	
-	public static void generate(List<IWorldGenerator> sortedGeneratorList, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
-		long worldSeed = world.getSeed();
-		Random fmlRandom = new Random(worldSeed);
-		long xSeed = fmlRandom.nextLong() >> 2 + 1L;
-		long zSeed = fmlRandom.nextLong() >> 2 + 1L;
-		long chunkSeed = (xSeed * chunkX + zSeed * chunkZ) ^ worldSeed;
-		
-		Profiler.startChunk(world, chunkX, chunkZ);
-		for (IWorldGenerator generator : sortedGeneratorList) {
-			fmlRandom.setSeed(chunkSeed);
-			
-			Profiler.startChunkMod(generator, world, chunkX, chunkZ);
-			generator.generate(fmlRandom, chunkX, chunkZ, world, chunkGenerator, chunkProvider);
-			Profiler.endChunkMod(generator, world, chunkX, chunkZ);
-		}
-		Profiler.endChunk(world, chunkX, chunkZ);
-		
-	}
 }

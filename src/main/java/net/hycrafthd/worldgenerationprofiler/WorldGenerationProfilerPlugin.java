@@ -9,7 +9,7 @@ import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.Name;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.TransformerExclusions;
 
-@TransformerExclusions("net.hycrafthd.worldgenerationprofiler")
+@TransformerExclusions("net.hycrafthd.worldgenerationprofiler.asm")
 @Name(value = "Worldgeneration Profiler Plugin")
 public class WorldGenerationProfilerPlugin implements IFMLLoadingPlugin {
 	
