@@ -87,8 +87,6 @@ curseforge {
         id = config.curse.id
         releaseType = config.curse.type
 
-        addGameVersion "1.7.2"
-        addGameVersion "1.7.10"
         addGameVersion "1.8"
         addGameVersion "1.8.8"
         addGameVersion "1.8.9"
