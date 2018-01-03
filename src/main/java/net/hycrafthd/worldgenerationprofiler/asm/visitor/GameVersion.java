@@ -7,9 +7,9 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public enum GameVersion {
 	
-	V1_8("/1.8.byte", "/1.8-obf.byte", "(Ljava/util/List;IILnet/minecraft/world/World;Lnet/minecraft/world/chunk/IChunkProvider;Lnet/minecraft/world/chunk/IChunkProvider;)V"),
-	V1_9_1_11("/1.9-1.11.byte", "/1.9-1.11-obf.byte", "(Ljava/util/List;IILnet/minecraft/world/World;Lnet/minecraft/world/chunk/IChunkGenerator;Lnet/minecraft/world/chunk/IChunkProvider;)V"),
-	V1_12("/1.12.byte", "/1.12-obf.byte", "(Ljava/util/List;IILnet/minecraft/world/World;Lnet/minecraft/world/gen/IChunkGenerator;Lnet/minecraft/world/chunk/IChunkProvider;)V"),
+	V1_8("1.8.byte", "1.8-obf.byte", "(Ljava/util/List;IILnet/minecraft/world/World;Lnet/minecraft/world/chunk/IChunkProvider;Lnet/minecraft/world/chunk/IChunkProvider;)V"),
+	V1_9_1_11("1.9-1.11.byte", "1.9-1.11-obf.byte", "(Ljava/util/List;IILnet/minecraft/world/World;Lnet/minecraft/world/chunk/IChunkGenerator;Lnet/minecraft/world/chunk/IChunkProvider;)V"),
+	V1_12("1.12.byte", "1.12-obf.byte", "(Ljava/util/List;IILnet/minecraft/world/World;Lnet/minecraft/world/gen/IChunkGenerator;Lnet/minecraft/world/chunk/IChunkProvider;)V"),
 	UNSUPPORTED("", "", "");
 	
 	private String file, fileobf, descriptor;
@@ -32,7 +32,7 @@ public enum GameVersion {
 	
 	public String getFileName() {
 		String filename = obf ? fileobf : file;
-		WorldGenerationProfilerPlugin.getLogger().info("Using " + filename + " to load class.");
+		WorldGenerationProfilerPlugin.getLogger().info("Using " + filename + " for class.");
 		return filename;
 	}
 	

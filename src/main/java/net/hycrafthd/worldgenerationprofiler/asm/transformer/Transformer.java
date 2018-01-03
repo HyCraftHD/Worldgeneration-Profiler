@@ -1,6 +1,6 @@
 package net.hycrafthd.worldgenerationprofiler.asm.transformer;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 
 import org.apache.commons.compress.utils.IOUtils;
@@ -29,7 +29,18 @@ public class Transformer implements IClassTransformer {
 		if (name.equals("net.hycrafthd.worldgenerationprofiler.generation.CustomWorldGenerator")) {
 			GameVersion version = GameVersion.getCurrent();
 			try {
-				bytes = IOUtils.toByteArray(getClass().getResourceAsStream(version.getFileName()));
+				InputStream input = (getClass().getClassLoader().getResourceAsStream(version.getFileName()));
+				ByteArrayOutputStream output = new ByteArrayOutputStream();
+				
+				final byte[] buffer = new byte[8024];
+				int n = 0;
+				long count = 0;
+				while (-1 != (n = input.read(buffer))) {
+					output.write(buffer, 0, n);
+					count += n;
+				}
+				
+				bytes = output.toByteArray();
 			} catch (IOException ex) {
 				ex.printStackTrace();
 			}
