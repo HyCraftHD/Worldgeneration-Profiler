@@ -22,7 +22,7 @@ public class WorldGenerationProfilerPlugin implements IFMLLoadingPlugin {
 	
 	@Override
 	public String getModContainerClass() {
-		return null;
+		return "net.hycrafthd.worldgenerationprofiler.Container";
 	}
 	
 	@Override

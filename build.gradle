@@ -35,6 +35,8 @@ minecraft {
     runDir = "run"
     mappings = config.forge.mappings
     makeObfSourceJar = false
+    
+    replace "@VERSION@", config.mod.version
 }
 
 jar {
@@ -50,7 +52,7 @@ jar {
 	)
 	
 	manifest {
-        attributes("FMLCorePlugin": "net.hycrafthd.worldgenerationprofiler.WorldGenerationProfilerPlugin", "FMLCorePluginContainsFMLMod": "false")
+        attributes("FMLCorePlugin": "net.hycrafthd.worldgenerationprofiler.WorldGenerationProfilerPlugin")
     }
 
 }
