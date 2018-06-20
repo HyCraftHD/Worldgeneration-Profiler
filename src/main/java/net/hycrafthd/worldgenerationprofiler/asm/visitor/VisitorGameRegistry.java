@@ -62,7 +62,7 @@ public class VisitorGameRegistry extends MinecraftClassVisitor {
 		
 		try {
 			LaunchClassLoader loader = (LaunchClassLoader) this.getClass().getClassLoader();
-			Class clazz = loader.findClass("net.hycrafthd.worldgenerationprofiler.generation.CustomWorldGenerator");
+			Class<?> clazz = loader.findClass("net.hycrafthd.worldgenerationprofiler.generation.CustomWorldGenerator");
 			WorldGenerationProfilerPlugin.getLogger().info("CustomWorldGenerator loaded in vm successfully for " + version + " (" + clazz.getName() + ")");
 		} catch (Exception ex) {
 			WorldGenerationProfilerPlugin.getLogger().error("CustomWorldGenerator class could not be loaded to classloader.", ex);

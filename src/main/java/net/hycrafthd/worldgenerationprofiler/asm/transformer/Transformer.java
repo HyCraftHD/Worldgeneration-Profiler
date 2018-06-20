@@ -3,8 +3,6 @@ package net.hycrafthd.worldgenerationprofiler.asm.transformer;
 import java.io.*;
 import java.util.HashMap;
 
-import org.apache.commons.compress.utils.IOUtils;
-
 import net.hycrafthd.worldgenerationprofiler.asm.*;
 import net.hycrafthd.worldgenerationprofiler.asm.visitor.*;
 import net.minecraft.launchwrapper.IClassTransformer;
@@ -34,12 +32,9 @@ public class Transformer implements IClassTransformer {
 				
 				final byte[] buffer = new byte[8024];
 				int n = 0;
-				long count = 0;
 				while (-1 != (n = input.read(buffer))) {
 					output.write(buffer, 0, n);
-					count += n;
 				}
-				
 				bytes = output.toByteArray();
 			} catch (IOException ex) {
 				ex.printStackTrace();

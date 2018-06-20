@@ -3,7 +3,6 @@ package net.hycrafthd.worldgenerationprofiler.asm;
 import static org.objectweb.asm.ClassReader.EXPAND_FRAMES;
 import static org.objectweb.asm.ClassWriter.COMPUTE_FRAMES;
 
-import java.io.*;
 import java.util.*;
 
 import org.objectweb.asm.*;
@@ -43,7 +42,8 @@ public class VisitorHelper {
 			// ------------------
 			// ONLY DEBUG
 			// try {
-			// FileOutputStream stream = new FileOutputStream(new File("GameRegistry.class"));
+			// FileOutputStream stream = new FileOutputStream(new
+			// File("GameRegistry.class"));
 			// stream.write(writer.toByteArray());
 			// stream.close();
 			// } catch (FileNotFoundException e) {
