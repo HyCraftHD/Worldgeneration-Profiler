@@ -26,7 +26,7 @@ public class Profiler {
 		time = System.currentTimeMillis() - time;
 		WorldGenerationProfilerPlugin.getLogger().log(Config.onlydisplayrelevant ? Level.DEBUG : Level.INFO, "[General] Finished Generation for Chunk " + chunkX + " - " + chunkZ + " -> Took about " + time + "ms");
 		if (time > Config.warn_whole) {
-			WorldGenerationProfilerPlugin.getLogger().warn("[General] Chunk (" + chunkX + " - " + chunkZ + ") at (" + chunkX * 16 + " - " + chunkZ * 16 + ")" + " took to long to generate (" + time + "ms)");
+			WorldGenerationProfilerPlugin.getLogger().warn("[General] Chunk (" + chunkX + " - " + chunkZ + ") at (" + chunkX * 16 + " - " + chunkZ * 16 + ")" + " took too long to generate (" + time + "ms)");
 		}
 	}
 	
@@ -48,7 +48,7 @@ public class Profiler {
 		time = System.currentTimeMillis() - time;
 		WorldGenerationProfilerPlugin.getLogger().log(Config.onlydisplayrelevant ? Level.DEBUG : Level.INFO, "[" + classname + "] Finished Generation for Chunk " + chunkX + " - " + chunkZ + " -> Took about " + time + "ms");
 		if (time > Config.warn_mod) {
-			WorldGenerationProfilerPlugin.getLogger().warn("[" + classname + "] Chunk (" + chunkX + " - " + chunkZ + ") at (" + chunkX * 16 + " - " + chunkZ * 16 + ")" + " took to long to generate (" + time + "ms)");
+			WorldGenerationProfilerPlugin.getLogger().warn("[" + classname + "] Chunk (" + chunkX + " - " + chunkZ + ") at (" + chunkX * 16 + " - " + chunkZ * 16 + ")" + " took too long to generate (" + time + "ms)");
 		}
 	}
 }
