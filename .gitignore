@@ -12,12 +12,8 @@ out
 .idea
 build
 .gradle
-gradle
-gradlew.bat
-gradlew
 gradle.properties
 eclipse
 run
 libs
 keys
-gradle.properties
